@@ -7,13 +7,13 @@ async function handleEvent(event) {
   if (event.type === "PostCreated") {
     const post = event.data
     posts[post.id] = {id: post.id, title: post.title, comments: []}
-    await axios.post("http://localhost:4005/events", {type: "QueryServiceUpdated"});
+    await axios.post("http://event-bus-srv:4005/events", {type: "QueryServiceUpdated"});
   }
 
   if (event.type === "CommentCreated") {
     const comment = event.data;
     posts[comment.postId].comments.push({id: comment.commentId, content: comment.content, status: comment.status})
-    await axios.post("http://localhost:4005/events", {type: "QueryServiceUpdated"});
+    await axios.post("http://event-bus-srv:4005/events", {type: "QueryServiceUpdated"});
   }
 
   if (event.type === "CommentUpdate") {
@@ -21,7 +21,7 @@ async function handleEvent(event) {
     comment.status = event.data.status;
     comment.content = event.data.content;
 
-    await axios.post("http://localhost:4005/events", {type: "QueryServiceUpdated"});
+    await axios.post("http://event-bus-srv:4005/events", {type: "QueryServiceUpdated"});
   }
 }
 
@@ -47,6 +47,6 @@ app.post('/events', async (req, res) => {
 
 app.listen(4002, async () => {
   console.log('listening on port 4002')
-  const eventsRes = await axios.get('http://localhost:4005/events')
+  const eventsRes = await axios.get('http://event-bus-srv:4005/events')
   eventsRes.data.forEach(e => handleEvent(e));
 });
