@@ -34,7 +34,7 @@ function Post({ id, title, comments }) {
   useEffect(() => {
     const fetchComments = async () => {
       const commentRes = await axios.get(
-        `http://localhost:4001/posts/${id}/comments`
+        `http://posts.com/posts/${id}/comments`
       );
       setCommentsState(commentRes.data);
     };
@@ -44,7 +44,7 @@ function Post({ id, title, comments }) {
   const handleCommentSubmit = async (content, setContent, textAreaRef) => {
     const data = { content };
     await axios
-      .post(`http://localhost:4001/posts/${id}/comments`, data)
+      .post(`http://posts.com/posts/${id}/comments`, data)
       .then(() =>
         setCommentSubmitStatus({
           status: "ok",
@@ -94,7 +94,7 @@ export default function PostList({ submitStatus }) {
 
   useEffect(() => {
     const fetchPost = async () => {
-      const postRes = await axios.get("http://localhost:4002/posts");
+      const postRes = await axios.get("http://posts.com/posts");
       const postData = postRes.data;
       setPosts(Object.values(postData));
     };

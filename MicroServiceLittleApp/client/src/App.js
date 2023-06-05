@@ -9,7 +9,7 @@ function App() {
 
   const handlePostSubmit = (title) => {
     const data = { title };
-      axios.post("http://localhost:4000/posts", data).then(() => setPostSubmitStatus({status: "OK"}));
+      axios.post("http://posts.com/posts/create", data).then(() => setPostSubmitStatus({status: "OK"}));
   };
 
   return (
