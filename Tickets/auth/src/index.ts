@@ -5,10 +5,18 @@ import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 import { errorHandler } from './middlewares/error-handler';
+import cookieSession from 'cookie-session'
 import mongoose from 'mongoose'
 
 const app = express();
 app.use(json());
+app.set('trust proxy', true); // Express is aware of a proxy (ingress nginx)
+app.use(
+    cookieSession({
+        signed: false, // diable encryption
+        secure: true
+    })
+);
 app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
