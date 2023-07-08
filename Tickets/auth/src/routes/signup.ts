@@ -2,8 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import { body, validationResult } from "express-validator";
 import CustomValidationError from "../errors/validation-error";
 import { User } from "../models/user";
-import {BadRequestError} from "../errors/bad-request-error"
-import jwt from "jsonwebtoken"
+import { BadRequestError } from "../errors/bad-request-error";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -28,23 +28,23 @@ router.post(
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      console.log('Email in use');
+      console.log("Email in use");
       const err = new BadRequestError("Email in use");
       return next(err);
     }
 
-    const user = User.build({email, password})
+    const user = User.build({ email, password });
     await user.save();
 
     // Generate JWT
-    const userJwt = jwt.sign({id: user.id, email: user.email}, 'asdf');
+    const userJwt = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_KEY!);
 
     // Store it on session
     req.session = {
-        jwt: userJwt
-    }
+      jwt: userJwt,
+    };
 
-    res.status(201).send(user);
+    res.status(201).send(user.toJSON());
   }
 );
 
