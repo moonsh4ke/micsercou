@@ -1,3 +1,4 @@
+.create_cluster_secrets.sh
 .DS_STORE
 notes.txt
 node_modules
