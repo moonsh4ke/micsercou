@@ -6,7 +6,6 @@ class CustomValidationError extends CustomError{
 
   constructor(public errors: ValidationError[]) {
     super("Invalid username or password")
-    console.log("errors is: ", errors);
     Object.setPrototypeOf(this, CustomValidationError.prototype)
   }
 

@@ -41,7 +41,6 @@ router.post(
             jwt: userJwt,
         };
 
-        console.log("signup succesfully");
         res.status(201).send(user.toJSON());
     }
 );
